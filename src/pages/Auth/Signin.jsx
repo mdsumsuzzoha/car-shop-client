@@ -1,20 +1,18 @@
 import { useContext, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { AuthContext } from "../../utilitis/AuthProvider";
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { AuthContext } from "../../utilities/AuthProvider";
 import { FcGoogle } from "react-icons/fc";
-
-import loginBg from '../../assets/images/loginBg.jpg'
+import Swal from "sweetalert2";
 
 const Signin = () => {
+
     const { signInUser, signInWithGoogle } = useContext(AuthContext);
 
     const [showpassword, setShowPassword] = useState(false);
     const location = useLocation();
     const navigate = useNavigate();
 
-    const handleLogInForm = e => {
+    const handleSignInForm = e => {
         e.preventDefault();
         const form = new FormData(e.currentTarget);
         const userLogInEmail = form.get('email')
@@ -27,14 +25,14 @@ const Signin = () => {
             }
             )
             .catch(error => {
-                if (error.code === "auth/invalid-login-credentials") {
-                    toast.error('email or password is not valid. Try again..');
-                    return;
-
-                }
-                toast.error(error.code);
+                Swal.fire({
+                    title: "Oops...",
+                    text: "email or password is not valid!! Try again..",
+                    html: `<span clasName='text-lg'>email or password is not valid!! Try again..</span>
+                <br/></b>('${error.code}')`,
+                    icon: "error",
+                });
                 return;
-
             })
     }
     const handleGoogleSignIn = () => {
@@ -43,25 +41,26 @@ const Signin = () => {
                 navigate(location?.state ? location.state : '/')
             })
             .catch(error => {
-                if (error.code === "auth/invalid-login-credentials") {
-                    toast.error('email or password is not valid. Try again..');
-                    return;
-
-                }
-                toast.error(error.code);
+                Swal.fire({
+                    title: "Oops...",
+                    text: "email or password is not valid!! Try again..",
+                    html: `<span clasName='text-lg'>email or password is not valid!! Try again..</span>
+                <br/></b>('${error.code}')`,
+                    icon: "error",
+                });
                 return;
 
             })
     }
     return (
         <div style={{
-            backgroundImage: `url(${loginBg}`,
+            backgroundImage: `url()`,
             backgroundSize: 'cover',
         }} className="py-4 px-2"
         >
             <div className="min-h-max flex justify-center">
                 <div className="card shrink-0 w-full max-w-lg shadow-2xl bg-base-100">
-                    <form onSubmit={handleLogInForm} className="card-body">
+                    <form onSubmit={handleSignInForm} className="card-body">
                         <h3 className="text-xl font-semibold text-primary text-center">Login here</h3>
                         <div className="form-control">
                             <label className="label">
@@ -86,13 +85,14 @@ const Signin = () => {
                         <div className="form-control mt-2">
                             <input type="submit" value="Login" className="btn btn-primary text-lg" />
                         </div>
-                        <p >Do not have account? <span className="btn-link  "><Link to='/register'>Resister Here</Link></span></p>
+                        <br />
+                        <p >Do not have account? <span className="btn-link font-semibold "><Link to='/signup'>Sign Up Here</Link></span></p>
                         <div className="divider">OR</div>
                         <button onClick={handleGoogleSignIn}
                             className="btn btn-outline btn-xs sm:btn-sm md:btn-md ">
                             <span className="text-lg flex items-center">
                                 <FcGoogle />
-                                <span className="ms-4">Login with Google</span>
+                                <span className="ms-4">Sign In with Google</span>
                             </span>
                         </button>
                     </form>

@@ -10,7 +10,7 @@ const Root = () => {
     return (
         <div className="">
             <div
-                style={{ background: 'linear-gradient(to top right, rgba(150, 150, 149, 0.4), rgba(237, 47, 95, 0.7))' }} className="px-4 md:px-10">
+                style={{ background: 'linear-gradient(to top right, rgba(56, 57, 59, 0.7), rgba(237, 47, 95, 0.4))' }} className="px-4 md:px-10">
                 <Banner></Banner>
                 <Navbar></Navbar>
             </div>

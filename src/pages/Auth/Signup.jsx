@@ -1,59 +1,87 @@
 import { useContext, useState } from "react";
-import { Link } from "react-router-dom";
-import { AuthContext } from "../../utilitis/AuthProvider";
-import regBgImg from '../../assets/images/signupBg.jpg'
-import 'react-toastify/dist/ReactToastify.css';
-import { toast } from "react-toastify";
+import { Link, } from "react-router-dom";
+import { AuthContext } from "../../utilities/AuthProvider";
+import Swal from "sweetalert2";
 
 const Signup = () => {
     const { createUser } = useContext(AuthContext)
-    const [regError, setRegError] = useState();
-    const [success, setSuccess] = useState('');
     const [showpassword, setShowPassword] = useState(false);
-
+    const [termsCondition, setTermsCondition] = useState(false);
 
 
 
     const handleRegisterForm = e => {
         e.preventDefault();
         const form = new FormData(e.currentTarget);
-        const userRegEmail = form.get('email')
-        const userRegPassword = form.get('password')
-        setRegError('');
-        setSuccess('');
+        const userEmail = form.get('email')
+        const userPassword = form.get('password')
 
 
-        if (userRegPassword.length < 6) {
-            toast.warn('Weak-password!! Password should be at least 6 or more characters');
+        if (userPassword.length < 6) {
+            Swal.fire({
+                text: "Password should be minimum 6 characters",
+                icon: "error"
+            });
             return;
         }
-        else if (!/[A-Z]/.test(userRegPassword)) {
-            toast.warn("Enter at least one capital letter");
+        else if (!/[A-Z]/.test(userPassword)) {
+            Swal.fire({
+                text: "Enter at least one capital letter",
+                icon: "error"
+            });
             return;
         }
-        else if (!/[0-9]/.test(userRegPassword)) {
-            toast.warn("Enter at least one digit");
+        else if (!/[0-9]/.test(userPassword)) {
+            Swal.fire({
+                text: "Enter at least one digit (1-9)",
+                icon: "error"
+            });
             return;
         }
-        else if (!/[@#^*.-]/.test(userRegPassword)) {
-            toast.warn("Enter at least one special characters. Ex: @#^*.-");
+        else if (!/[@#^*.-]/.test(userPassword)) {
+            Swal.fire({
+                text: "Enter at least one special characters. Ex:@-*.^#",
+                icon: "error"
+            });
+            return;
+        }
+        else if (!termsCondition == true) {
+            Swal.fire({
+                text: "Accept the Terms & Condition. Then try again",
+                icon: "error"
+            });
             return;
         }
 
-        createUser(userRegEmail, userRegPassword)
+        createUser(userEmail, userPassword)
             .then(() => {
-                setSuccess('Your account create successfully');
+                Swal.fire({
+                    text: 'Your account create successfully',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'Go Home',
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    icon: "success"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+
+                        window.location.href = '/';
+                    }
+                });
             })
             .catch((error) => {
-                setRegError(error.code)
+                Swal.fire({
+                    text: `${error.code}`,
+                    icon: "error"
+                });
+
             })
 
     }
 
-
     return (
         <div style={{
-            backgroundImage: `url(${regBgImg}`,
+            backgroundImage: `url()`,
             backgroundSize: 'cover',
         }} className="py-4 px-2">
             <div className="hero max-h-max py-4">
@@ -85,33 +113,18 @@ const Signup = () => {
                         </div>
                         <div>
                             <label className="label">
-                                <p><span><input type="checkbox" name="terms" id="2" required /> Accept the Terms & Condition</span></p>
+                                <p><span><input onClick={() => setTermsCondition(!termsCondition)} type="checkbox" name="terms" id="2" />Accept the Terms & Condition</span></p>
                             </label>
-                            <span className="text-sm link link-hover"><Link to='/undcons'>See the terms & condition</Link></span>
+                            <span className="text-sm link link-hover"><Link>See the terms & condition</Link></span>
                         </div>
-                        {success && <div>
-                            <label className="label">
-                                <p className="text-green-600 font-semibold texl-lg text-center bg-emerald-200 rounded-lg py-2">{success}
-                                <br /><Link to='/' className="btn-link">Go Home</Link></p>
-
-                            </label>
-                        </div>
-                        }
-                        {regError && <div>
-                            <label className="label">
-                                <p className="text-red-500 text-center bg-yellow-100 rounded-lg py-2">{regError}</p>
-                            </label>
-                        </div>
-                        }
-
                         <div
                             className="form-control mt-6">
-                            <input type="submit" value="Register" className="btn btn-primary" />
+                            <input type="submit" value="Create Account" className="btn btn-primary text-lg" />
                         </div>
 
                     </form>
                     <div className="text-center space-y-4 mb-6 ">
-                        <p>Already have an account? <span className="btn-link font-semibold texl-lg"><Link to='/login'>Login</Link></span>
+                        <p>Already have an account? <span className="btn-link font-semibold texl-lg"><Link to='/signin'>Sign In</Link></span>
                         </p>
                     </div>
                 </div>

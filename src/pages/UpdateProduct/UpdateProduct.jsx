@@ -1,8 +1,13 @@
+import { useLoaderData } from "react-router-dom";
 import Swal from 'sweetalert2'
 
-const AddProduct = () => {
 
-    const hsandleAddProduct = e => {
+const UpdateProduct = () => {
+    const product = useLoaderData();
+    
+    const {_id,  pName, bName, pType, pPrice, pDesc, pRating, pImage } = product;
+
+    const handleUpdateProduct = e => {
         e.preventDefault();
         const form = e.target;
         const pName = form.pName.value;
@@ -13,24 +18,24 @@ const AddProduct = () => {
         const pRating = form.pRating.value;
         const pImage = form.pImage.value;
 
-        const newProduct = { pName, bName, pType, pPrice, pDesc, pRating, pImage };
-        console.log(newProduct);
+        const updateProduct = { pName, bName, pType, pPrice, pDesc, pRating, pImage };
+        console.log(updateProduct);
         // send data to server 
-        fetch('http://localhost:5000/product',
+        fetch(`http://localhost:5000/product/${_id}`,
             {
-                method: 'POST',
+                method: 'PUT',
                 headers: {
                     "content-type": "application/json"
                 },
-                body: JSON.stringify(newProduct)
+                body: JSON.stringify(updateProduct)
             }
         )
             .then(res => res.json())
             .then(data => {
-                if (data.insertedId) {
+                if (data.modifiedCount >0) {
                     Swal.fire({
                         title: 'Success!',
-                        text: 'Product information saved successfully',
+                        text: 'Updated the product information successfully',
                         icon: 'success',
                         confirmButtonText: 'Ok'
                     })
@@ -38,67 +43,68 @@ const AddProduct = () => {
                 console.log(data);
             })
     }
+
+
     return (
-        <div className="bg-slate-200">
-            <h2>Add Product</h2>
-            <form onSubmit={hsandleAddProduct} className="card-body ">
+        <div>
+            <h2 className="text-2xl font-bold text-center py-6">Update: {pName}</h2>
+            <form onSubmit={handleUpdateProduct} className="card-body ">
                 {/* Name */}
                 <div className="form-control">
                     <label className="label">
                         <span className="label-text">Product Name</span>
                     </label>
-                    <input type="text" name="pName" placeholder="Name" className="input input-bordered" />
+                    <input type="text" name="pName" defaultValue={pName} placeholder="Name" className="input input-bordered" />
                 </div>
                 {/* Brand Name */}
                 <div className="form-control">
                     <label className="label">
                         <span className="label-text">Brand</span>
                     </label>
-                    <input type="text" name="bName" placeholder="Brand Name" className="input input-bordered" />
+                    <input type="text" name="bName" defaultValue={bName} placeholder="Brand Name" className="input input-bordered" />
                 </div>
                 {/* Types */}
                 <div className="form-control">
                     <label className="label">
                         <span className="label-text">Types</span>
                     </label>
-                    <input type="text" name="pType" placeholder="Product Type" className="input input-bordered" />
+                    <input type="text" name="pType" defaultValue={pType} placeholder="Product Type" className="input input-bordered" />
                 </div>
                 {/* Price */}
                 <div className="form-control">
                     <label className="label">
                         <span className="label-text">Price</span>
                     </label>
-                    <input type="text" name="pPrice" placeholder="Product Price $" className="input input-bordered" />
+                    <input type="text" name="pPrice" defaultValue={pPrice} placeholder="Product Price $" className="input input-bordered" />
                 </div>
                 {/* Description */}
                 <div className="form-control">
                     <label className="label">
                         <span className="label-text">Description</span>
                     </label>
-                    <input type="text" name="pDesc" placeholder="Short description" className="input input-bordered" />
+                    <input type="text" name="pDesc" defaultValue={pDesc} placeholder="Short description" className="input input-bordered" />
                 </div>
                 {/* Rating */}
                 <div className="form-control">
                     <label className="label">
-                        <span className="label-text">Rating</span>
+                        <span className="label-text">Rating out of 5</span>
                     </label>
-                    <input type="text" name="pRating" placeholder="Product Rating (Out of 5)" className="input input-bordered" />
+                    <input type="text" name="pRating" defaultValue={pRating} placeholder="Product Rating (Out of 5)" className="input input-bordered" />
                 </div>
                 {/* Image */}
                 <div className="form-control">
                     <label className="label">
                         <span className="label-text">Image URL</span>
                     </label>
-                    <input type="text" name="pImage" placeholder="Product Image URL" className="input input-bordered" />
+                    <input type="text" name="pImage" defaultValue={pImage} placeholder="Product Image URL" className="input input-bordered" />
                 </div>
                 {/* Submit Btn */}
                 <div className="form-control mt-6">
-                    <input type="submit" value="Add Product" name="" id="" className="btn btn-primary" />
+                    <input type="submit" value="Update Product" name="" id="" className="btn btn-primary" />
                 </div>
             </form>
-
         </div>
     );
 };
 
-export default AddProduct;
+export default UpdateProduct;

@@ -6,7 +6,7 @@ const ProductBrand = () => {
     const brands = [...new Set(products.map(product => product.bName))];
 
     useEffect(() => {
-        fetch('http://localhost:5000/products')
+        fetch('http://localhost:5000/product')
             .then(res => res.json())
             .then(data => setProducts(data))
     }, [])

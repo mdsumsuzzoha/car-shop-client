@@ -5,6 +5,11 @@
 
 }
 
+a.active {
+  color: rgb(188, 18, 18);
+  font-size: larger;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

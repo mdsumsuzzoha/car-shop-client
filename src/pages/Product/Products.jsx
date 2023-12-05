@@ -1,20 +1,58 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import Swal from 'sweetalert2'
 
 
 const Products = () => {
 
-    const [products, setProducts] = useState([]);
 
+    const [products, setProducts] = useState([]);
     useEffect(() => {
-        fetch('http://localhost:5000/products')
+        fetch('http://localhost:5000/product')
             .then(res => res.json())
             .then(data => setProducts(data))
     }, [])
 
+    const handleDelete = (id) => {
+        console.log(id)
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                console.log('delete confirm')
+                fetch(`http://localhost:5000/product/${id}`, {
+                    method: 'DELETE'
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data)
+                        if (data.deletedCount > 0) {
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Your file has been deleted.",
+                                icon: "success"
+                            });
+                            fetch('http://localhost:5000/product')
+                                .then(res => res.json())
+                                .then(data => setProducts(data))
+
+                        }
+                    })
+
+            }
+        });
+    }
+
 
     return (
         <div>
-            <h2>Products:{products.length}</h2>
+            {/* <h2>Products:{loadedProducts.length}</h2> */}
 
             <div className="grid grid-cols-3 gap-6 justify-items-center  mx-auto py-10">
                 {
@@ -29,7 +67,8 @@ const Products = () => {
                                 <p>Rating: {product.pRating} out of 5</p>
                                 <div className="card-actions justify-center">
                                     <button className="btn btn-primary">Details</button>
-                                    <button className="btn btn-primary">Update</button>
+                                    <Link to={`updateProduct/${product._id}`}><button className="btn btn-primary">Update</button></Link>
+                                    <button onClick={() => handleDelete(product._id)} className="btn btn-primary">Delete</button>
                                 </div>
                             </div>
                         </div>

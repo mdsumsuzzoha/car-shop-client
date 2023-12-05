@@ -1,3 +1,23 @@
+// import { createContext, useState } from "react";
+
+// const AuthContext = createContext(null);
+// const AuthProvider = ({ children }) => {
+//     const [user, setUser] = useState(null);
+
+//     const userInfo = {
+//         user,
+//     }
+//     return (
+//         <div>
+//             <AuthContext.Provider>
+//                 {children}
+//             </AuthContext.Provider>
+//         </div>
+//     );
+// };
+
+// export default AuthProvider;
+
 
 import { GoogleAuthProvider, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut,   } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
