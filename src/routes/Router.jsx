@@ -6,6 +6,8 @@ import UpdateProduct from "../pages/UpdateProduct/UpdateProduct";
 import Signup from "../pages/Auth/Signup";
 import Signin from "../pages/Auth/Signin";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
+import MyCart from "../pages/MyCart/MyCart";
+import PrivateRoute from "./PrivateRouter";
 
 
 const router = createBrowserRouter([
@@ -21,7 +23,15 @@ const router = createBrowserRouter([
 
             {
                 path: "addProduct",
-                element: <AddProduct></AddProduct>
+                element: <PrivateRoute>
+                    <AddProduct></AddProduct>
+                </PrivateRoute>
+            },
+            {
+                path: "myCart",
+                element: <PrivateRoute>
+                    <MyCart></MyCart>
+                </PrivateRoute>
             },
             {
                 path: "updateProduct/:id",
@@ -37,7 +47,7 @@ const router = createBrowserRouter([
             {
                 path: '/signup',
                 element: <Signup></Signup>
-                    
+
                 // <ProtectedRoutes>
                 // </ProtectedRoutes>
             },
