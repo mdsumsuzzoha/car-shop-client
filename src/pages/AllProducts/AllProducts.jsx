@@ -1,14 +1,17 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useParams, } from "react-router-dom";
 import ErrorPage from "../ErrorPage/ErrorPage";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { AuthContext } from "../../utilities/AuthProvider";
 
 const AllProducts = () => {
+    const { setLoading} = useContext(AuthContext)
     const { cat } = useParams();
 
     const [loadedProducts, setLoadedProducts] = useState([]);
     useEffect(() => {
+        
         fetch(`http://localhost:5000/product/`)
             .then(res => res.json())
             .then(data => setLoadedProducts(data))
@@ -18,6 +21,7 @@ const AllProducts = () => {
     const filteredProduct = loadedProducts.filter(product => product.bName.toLowerCase() == cat.toLowerCase());
     // console.log(filteredProduct.length)
     if (filteredProduct.length < 1) {
+        setLoading(true);
         return <ErrorPage></ErrorPage>
     }
 

@@ -30,10 +30,28 @@ const ProductDetails = () => {
 
     }
 
+
+
     const addToLocalStorages = id => {
-        const cart = getStoredItems();
-        cart.push(id)
-        saveCartItems(cart);
+        Swal.fire({
+            title: "Are you sure?",
+            icon: "info",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, Add to cart"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const cart = getStoredItems();
+                cart.push(id)
+                saveCartItems(cart);
+                Swal.fire({
+                    title: "Succeded",
+                    text: "Your product has been added.",
+                    icon: "success"
+                });
+            }
+        });
 
     }
 
@@ -48,7 +66,7 @@ const ProductDetails = () => {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                console.log('delete confirm')
+                // console.log('delete confirm')
                 fetch(`http://localhost:5000/product/${id}`, {
                     method: 'DELETE'
                 })
@@ -62,8 +80,8 @@ const ProductDetails = () => {
                                 icon: "success"
                             });
                             return <BrandNames></BrandNames>
-                                 
-                            
+
+
                         }
                     })
 
@@ -86,7 +104,7 @@ const ProductDetails = () => {
                             <Link >
                                 <button onClick={() => handleDelete(_id)} className="btn btn-secondary">Delete Product</button>
                             </Link>
-                            <Link to={`/myCart`}>
+                            <Link to={'/myCart'}>
                                 <button onClick={() => addToLocalStorages(loadedProducts)} className="btn btn-primary">Add to Cart</button>
                             </Link>
                         </div>

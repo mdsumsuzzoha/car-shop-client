@@ -1,11 +1,20 @@
+import { useState } from "react";
 
 const MyCart = () => {
-
 
     const storedCartString = localStorage.getItem('cart');
     const getStoredItems = JSON.parse(storedCartString);
 
-    // console.log(getStoredId)
+    const [cartItemsLS, setCartItemsLS] = useState(getStoredItems);
+
+    const handleDeleteCart = (id) => {
+        const remainingStoredItems = cartItemsLS.filter(items => items._id !== id)
+        const cartString = JSON.stringify(remainingStoredItems)
+        localStorage.setItem('cart', cartString)
+        const storedCartString = localStorage.getItem('cart');
+        const getStoredItems = JSON.parse(storedCartString);
+        setCartItemsLS(getStoredItems);
+    }
 
     return (
         <div>
@@ -18,18 +27,20 @@ const MyCart = () => {
                                 <tr className="text-lg ">
                                     <th className="text-start w-64 h-14">Model Name</th>
                                     <th className="text-start w-32">Brand</th>
-                                    <th>Price</th>
+                                    <th className="text-end">Price</th>
+                                    <th className="text-end w-10">X</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {
-                                    getStoredItems.map((item, idx) => <tr
-                                        key={item._id}
+                                    cartItemsLS.map((item, idx) => <tr
+                                        key={idx}
                                         className="font-bold"
                                     >
                                         <td>{idx + 1}. {item.pName}</td>
                                         <td>{item.bName}</td>
-                                        <td>{item.pPrice}</td>
+                                        <td className="text-end">${item.pPrice}</td>
+                                        <td className="text-end text-red-500"><button onClick={() => handleDeleteCart(item._id)}>X</button></td>
                                     </tr>
                                     )}
                             </tbody>
