@@ -2,7 +2,7 @@ import Swal from 'sweetalert2'
 
 const AddProduct = () => {
 
-    const hsandleAddProduct = e => {
+    const handleAddProduct = e => {
         e.preventDefault();
         const form = e.target;
         const pName = form.pName.value;
@@ -40,8 +40,8 @@ const AddProduct = () => {
     }
     return (
         <div className="bg-slate-200">
-            <h2>Add Product</h2>
-            <form onSubmit={hsandleAddProduct} className="card-body ">
+            <h2 className="text-center font-bold text-3xl py-6">Add a new Product</h2>
+            <form onSubmit={handleAddProduct} className="card-body ">
                 {/* Name */}
                 <div className="form-control">
                     <label className="label">

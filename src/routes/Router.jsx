@@ -11,6 +11,7 @@ import PrivateRoute from "./PrivateRouter";
 import AllProducts from "../pages/AllProducts/AllProducts";
 import ProductDetails from "../pages/AllProducts/ProductDetails";
 import UpdateProduct from "../pages/AllProducts/UpdateProduct";
+import Contact from "../pages/Contact/Contact";
 // import ProductBrand from "../pages/Product/ProductBrand";
 // import ProductBrandWise from "../pages/Product/ProductBrandWise";
 
@@ -69,6 +70,10 @@ const router = createBrowserRouter([
                 // <ProtectedRoutes>
                 // </ProtectedRoutes>
             },
+            {
+                path: '/contact',
+                element: <Contact></Contact>
+            }
 
         ]
 

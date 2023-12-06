@@ -1,4 +1,4 @@
-import { useLoaderData,  } from "react-router-dom";
+import { useLoaderData, } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const UpdateProduct = () => {
@@ -19,7 +19,6 @@ const UpdateProduct = () => {
         const pImage = form.pImage.value;
 
         const updateProduct = { pName, bName, pType, pPrice, pDesc, pRating, pImage };
-        // console.log(updateProduct);
         // send data to server 
         fetch(`http://localhost:5000/product/${_id}`,
             {
@@ -33,21 +32,23 @@ const UpdateProduct = () => {
             .then(res => res.json())
             .then(data => {
                 if (data.modifiedCount > 0) {
+                    form.value.reset();
                     Swal.fire({
                         title: 'Success!',
                         text: 'Updated the product information successfully',
                         icon: 'success',
                         confirmButtonText: 'Ok'
                     })
+
                 }
-                // console.log(data);
             })
+        
     }
 
 
     return (
         <div>
-            <h2>Update Products</h2>
+            <h2 className="text-center font-bold text-3xl my-6">Update Products</h2>
             <form onSubmit={handleUpdateProduct} className="card-body ">
                 {/* Name */}
                 <div className="form-control">

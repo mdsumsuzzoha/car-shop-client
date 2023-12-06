@@ -3,6 +3,7 @@
 // import Products from "../Product/Products";
 
 import BrandNames from "../BrandNames/BrandNames";
+import Contact from "../Contact/Contact";
 
 // import ProductBrand from "../Product/ProductBrand";
 
@@ -13,11 +14,8 @@ const Home = () => {
     return (
         <div>
             <BrandNames></BrandNames>
-            {/* <ProductBrand></ProductBrand> */}
-            {/* <AllProducts></AllProducts> */}
-            {/* <Products></Products> */}
-            {/* <ProductBrand></ProductBrand> */}
-            {/* <BrandWiseProduct></BrandWiseProduct> */}
+            <Contact></Contact>
+            
         </div>
     );
 };
