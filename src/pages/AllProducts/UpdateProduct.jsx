@@ -1,11 +1,11 @@
-import { useLoaderData } from "react-router-dom";
-import Swal from 'sweetalert2'
-
+import { useLoaderData,  } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const UpdateProduct = () => {
+
+
     const product = useLoaderData();
-    
-    const {_id,  pName, bName, pType, pPrice, pDesc, pRating, pImage } = product;
+    const { _id, pName, bName, pType, pPrice, pDesc, pRating, pImage } = product;
 
     const handleUpdateProduct = e => {
         e.preventDefault();
@@ -19,7 +19,7 @@ const UpdateProduct = () => {
         const pImage = form.pImage.value;
 
         const updateProduct = { pName, bName, pType, pPrice, pDesc, pRating, pImage };
-        console.log(updateProduct);
+        // console.log(updateProduct);
         // send data to server 
         fetch(`http://localhost:5000/product/${_id}`,
             {
@@ -32,7 +32,7 @@ const UpdateProduct = () => {
         )
             .then(res => res.json())
             .then(data => {
-                if (data.modifiedCount >0) {
+                if (data.modifiedCount > 0) {
                     Swal.fire({
                         title: 'Success!',
                         text: 'Updated the product information successfully',
@@ -40,14 +40,14 @@ const UpdateProduct = () => {
                         confirmButtonText: 'Ok'
                     })
                 }
-                console.log(data);
+                // console.log(data);
             })
     }
 
 
     return (
         <div>
-            <h2 className="text-2xl font-bold text-center py-6">Update: {pName}</h2>
+            <h2>Update Products</h2>
             <form onSubmit={handleUpdateProduct} className="card-body ">
                 {/* Name */}
                 <div className="form-control">

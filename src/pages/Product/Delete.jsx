@@ -1,20 +1,42 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import Swal from 'sweetalert2'
+import { Link, useLoaderData, useParams } from "react-router-dom";
+import Swal from "sweetalert2";
 
 
-const Products = () => {
+const ProductBrandWise = () => {
+    const loadedProducts = useLoaderData();
 
+    // const [loadedProducts, setLoadedProducts]= useState([]);
+    // useEffect(()=>{
+    //     fetch(`http://localhost:5000/product/`)
+    //     .then(res => res.json())
+    //     .then(data=> setLoadedProducts(data))
+    // },[])
+    console.log(loadedProducts);
 
-    const [products, setProducts] = useState([]);
-    useEffect(() => {
-        fetch('http://localhost:5000/product')
-            .then(res => res.json())
-            .then(data => setProducts(data))
-    }, [])
+    const { value } = useParams();
+    console.log(value);
+
+    const [products, setProducts] = useState(loadedProducts);
+    const { id } = useParams();
+    const filteredProduct = products.filter(product => product.bName.toLowerCase() == id.toLowerCase());
+    if (filteredProduct.length < 1) {
+        return (
+            <div className="flex flex-col justify-center items-center min-h-screen bg-gradient-to-br from-blue-300 via-purple-400 to-pink-300">
+                <div className="text-center text-gray-800">
+                    <h1 className="text-6xl font-bold mb-2">404</h1>
+                    <h2 className="text-3xl mb-4">Product Not Found</h2>
+                    <p className="text-lg text-gray-600">
+                        Sorry, the page you are looking for does not exist.
+                    </p>
+                    <p className="mt-4">
+                        Return to the <Link to="/" className="text-blue-500">homepage</Link>.
+                    </p>
+                </div>
+            </div>)
+    }
 
     const handleDelete = (id) => {
-        console.log(id)
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -49,14 +71,12 @@ const Products = () => {
         });
     }
 
-
     return (
         <div>
-            {/* <h2>Products:{loadedProducts.length}</h2> */}
-
             <div className="grid grid-cols-3 gap-6 justify-items-center  mx-auto py-10">
                 {
-                    products.map(product => <div key={product._id}>
+                    filteredProduct.map(product => <div key={product._id}
+                    >
                         <div className="card card-compact  bg-base-100 shadow-xl">
                             <figure><img src={product.pImage} alt="Shoes" className="object-cover w-full max-h-min" /></figure>
                             <div className="card-body">
@@ -67,29 +87,24 @@ const Products = () => {
                                 <p>Rating: {product.pRating} out of 5</p>
                                 <div className="card-actions justify-center">
                                     <button className="btn btn-primary">Details</button>
-                                    <Link to={`updateProduct/${product._id}`}><button className="btn btn-primary">Update</button></Link>
-                                    <button onClick={() => handleDelete(product._id)} className="btn btn-primary">Delete</button>
+                                    <Link
+                                        to={`updateProduct/${product._id}`}
+                                        // to='/updateProduct'
+                                        state={product._id}><button className="btn btn-primary">Update</button></Link>
+                                    <button
+                                        onClick={() => handleDelete(product._id)} className="btn btn-primary">Delete</button>
                                 </div>
                             </div>
                         </div>
-                        {/* <div className="card w-92 bg-base-100 shadow-xl">
-                            <figure className="px-4 pt-4">
-                                <img src={product.pImage} alt="img" className="rounded-xl object-cover h-28 w-72" />
-                            </figure>
-                            <h2 className="card-title p-2 mx-auto text-red-600">{product.pName}</h2>
-                            <div className="pb-4">
-                                <hr className="w-20 mb-1 mx-auto" />
-                                <hr className="w-10 mx-auto" />
-                                <p className="taxt-lg font-semibold text-center ">${product.pPrice}</p>
-                            </div>
 
-                        </div> */}
+
                     </div>)
                 }
+
             </div>
 
         </div>
     );
 };
 
-export default Products;
+export default ProductBrandWise;

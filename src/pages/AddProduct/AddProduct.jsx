@@ -14,7 +14,7 @@ const AddProduct = () => {
         const pImage = form.pImage.value;
 
         const newProduct = { pName, bName, pType, pPrice, pDesc, pRating, pImage };
-        console.log(newProduct);
+        // console.log(newProduct);
         // send data to server 
         fetch('http://localhost:5000/product',
             {
@@ -35,7 +35,7 @@ const AddProduct = () => {
                         confirmButtonText: 'Ok'
                     })
                 }
-                console.log(data);
+                // console.log(data);
             })
     }
     return (
