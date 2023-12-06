@@ -13,6 +13,7 @@ import ProductDetails from "../pages/AllProducts/ProductDetails";
 import UpdateProduct from "../pages/AllProducts/UpdateProduct";
 import Contact from "../pages/Contact/Contact";
 import About from "../pages/About/About";
+import Test from "../pages/Test";
 
 
 const router = createBrowserRouter([
@@ -76,6 +77,10 @@ const router = createBrowserRouter([
             {
                 path: '/about',
                 element: <About></About>
+            },
+            {
+                path: '/test',
+                element: <Test></Test>
             }
 
         ]

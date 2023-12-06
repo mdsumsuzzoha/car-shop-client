@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link, useParams, } from "react-router-dom";
 import ErrorPage from "../ErrorPage/ErrorPage";
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 const AllProducts = () => {
     const { cat } = useParams();
@@ -14,19 +16,30 @@ const AllProducts = () => {
 
 
     const filteredProduct = loadedProducts.filter(product => product.bName.toLowerCase() == cat.toLowerCase());
-    console.log(filteredProduct.length)
-    if(filteredProduct.length<1){
+    // console.log(filteredProduct.length)
+    if (filteredProduct.length < 1) {
         return <ErrorPage></ErrorPage>
     }
 
     return (
         <div>
-            <div className="grid  md:grid-cols-3 gap-6 justify-items-center  mx-auto py-10">
+            <Carousel>
+                {
+                    filteredProduct.slice(0, 3).map(product => <div
+                        key={product._id}
+                        className="max-h-screen min-h-screen">
+                        <img src={product.pImage} className="h-full w-full object-cover"/>
+                        <p className="legend">{product.pName}</p>
+                    </div>)
+                }
+                
+            </Carousel>
+            <div className="grid  md:grid-cols-4 gap-6 justify-items-center mx-auto py-10">
                 {
                     filteredProduct.map(product => <div key={product._id}
                     >
-                        <div className="card w-96 h-full bg-base-100 shadow-xl">
-                            <figure><img src={product.pImage} alt="Shoes" className="object-cover w-full max-h-min" /></figure>
+                        <div className="card  h-full bg-base-100 shadow-xl">
+                            <figure><img src={product.pImage} alt="Shoes" className="object-cover w-full min-h-full" /></figure>
                             <div className="card-body">
                                 <h2 className="card-title">{product.pName}</h2>
                                 <p>Brand: {product.bName}</p>

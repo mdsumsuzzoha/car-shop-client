@@ -32,7 +32,7 @@ const UpdateProduct = () => {
             .then(res => res.json())
             .then(data => {
                 if (data.modifiedCount > 0) {
-                    form.value.reset();
+                    // form.value.reset();
                     Swal.fire({
                         title: 'Success!',
                         text: 'Updated the product information successfully',
