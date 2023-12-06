@@ -12,8 +12,7 @@ import AllProducts from "../pages/AllProducts/AllProducts";
 import ProductDetails from "../pages/AllProducts/ProductDetails";
 import UpdateProduct from "../pages/AllProducts/UpdateProduct";
 import Contact from "../pages/Contact/Contact";
-// import ProductBrand from "../pages/Product/ProductBrand";
-// import ProductBrandWise from "../pages/Product/ProductBrandWise";
+import About from "../pages/About/About";
 
 
 const router = createBrowserRouter([
@@ -73,6 +72,10 @@ const router = createBrowserRouter([
             {
                 path: '/contact',
                 element: <Contact></Contact>
+            },
+            {
+                path: '/about',
+                element: <About></About>
             }
 
         ]

@@ -1,21 +1,16 @@
-// import ProductBrand from "../Product/ProductBrand";
-// import BrandWiseProduct from "../Product/BrandWiseProduct";
-// import Products from "../Product/Products";
-
+import About from "../About/About";
 import BrandNames from "../BrandNames/BrandNames";
 import Contact from "../Contact/Contact";
 
-// import ProductBrand from "../Product/ProductBrand";
 
-// import AllProducts from "../AllProducts/AllProducts";
-// import Products from "../Product/Products";
 
 const Home = () => {
     return (
         <div>
             <BrandNames></BrandNames>
+            <About></About>
             <Contact></Contact>
-            
+
         </div>
     );
 };

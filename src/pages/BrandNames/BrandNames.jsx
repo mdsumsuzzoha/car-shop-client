@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 
 const BrandNames = () => {
     return (
-        <div> 
-            <div className="w-9/12 mx-auto flex flex-wrap justify-center gap-6 py-10 md:py-20">
+        <div className="bg-base-300"> 
+            <div className="w-9/12 mx-auto flex flex-wrap justify-center gap-6 py-10 md:py-20 ">
                 <Link to={`/products/${'Toyota'}`}
                 >
                     <div className="card w-56 bg-base-100 shadow-xl">
