@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
-import { getCartItems, setCartItems } from "../../utilities/LocalStorageFunctions";
+// import { getCartItems, } from "../../utilities/LocalStorageFunctions";
 
 const ProductDetails = () => {
     const { id } = useParams();
     const [loadedProducts, setLoadedProducts] = useState([]);
-    const [cart, setCart] = useState(getCartItems);
+    // const [cart, setCart] = useState(getCartItems);
 
     useEffect(() => {
         fetch(`https://car-shop-server-pi.vercel.app/products/${id}`)
@@ -15,24 +15,16 @@ const ProductDetails = () => {
     }, [])
     const { _id, pImage, pName, pDesc, bName, pPrice } = loadedProducts;
 
-    useEffect(() => {
-        setCartItems(cart); // Update cart items in local storage when cart changes
-    }, [cart]);
 
-
-    const addToCart = (productId) => {
-        const existingItemIndex = cart.findIndex((item) => item.id === productId);
-        if (existingItemIndex !== -1) {
-            const updatedCart = [...cart];
-            updatedCart[existingItemIndex].quantity += 1;
-            setCart(updatedCart);
-        } else {
-            const productToAdd = { id: productId, quantity: 1 };
-            setCart([...cart, productToAdd]);
-        }
-    };
-
-    const handleAddToCart = id => {
+    const handleAddToCart = pId => {
+        const today = new Date();
+        const date = today.toLocaleDateString();
+        const time = today.toLocaleTimeString();
+        const dateTime = {
+            date,
+            time,
+          };
+        const newCartItem = {pId, dateTime}
         // console.log(id)
         Swal.fire({
             title: "Are you sure?",
@@ -43,12 +35,26 @@ const ProductDetails = () => {
             confirmButtonText: "Yes, Add to cart"
         }).then((result) => {
             if (result.isConfirmed) {
-                addToCart(id);
-                Swal.fire({
-                    title: "Succeded",
-                    text: "Your product has been added.",
-                    icon: "success"
-                });
+
+                console.log(newCartItem);
+                fetch(`http://localhost:5000/cartItems`, {
+                    method: "POST",
+                    headers: {
+                        "content-Type": "application/json",
+                    },
+                    body: JSON.stringify(newCartItem),
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.insertedId) {
+                            Swal.fire({
+                                title: "Succeded",
+                                text: "Your product has been added.",
+                                icon: "success"
+                            })
+                            
+                        }
+                    })                        
             }
         });
 
