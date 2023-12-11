@@ -13,6 +13,7 @@ import UpdateProduct from "../pages/AllProducts/UpdateProduct";
 import Contact from "../pages/Contact/Contact";
 import About from "../pages/About/About";
 import Test from "../pages/Test";
+import BrandNames from "../pages/BrandNames/BrandNames";
 
 
 const router = createBrowserRouter([
@@ -26,8 +27,21 @@ const router = createBrowserRouter([
                 element: <Home></Home>
             },
             {
-                path: '/products/:cat',
-                element: <AllProducts></AllProducts>
+                path: "addProduct",
+                element:
+                    <PrivateRoute>
+                        <AddProduct></AddProduct>
+                    </PrivateRoute>
+            },
+            {
+                path: "/products/:cat",
+                element: <AllProducts></AllProducts>,
+                loader: () => fetch("https://car-shop-server-pi.vercel.app/products/"),
+            },
+
+            {
+                path: '/brands',
+                element: <BrandNames></BrandNames>
             },
             {
                 path: '/details/:id',
@@ -40,21 +54,16 @@ const router = createBrowserRouter([
                 element: <PrivateRoute>
                     <UpdateProduct></UpdateProduct>
                 </PrivateRoute>,
-                loader: ({ params }) => fetch(`http://localhost:5000/product/${params.id}`)
-            },
+                loader: ({ params }) => fetch(`https://car-shop-server-pi.vercel.app/products/${params.id}`)
+            },             
 
-            {
-                path: "addProduct",
-                element: <PrivateRoute>
-                    <AddProduct></AddProduct>
-                </PrivateRoute>
-            },
+
             {
                 path: "/myCart",
                 element: <PrivateRoute>
                     <MyCart></MyCart>
                 </PrivateRoute>,
-                loader: () => fetch(`http://localhost:5000/product/`)
+                loader: () => fetch(`https://car-shop-server-pi.vercel.app/products/`)
             },
             {
                 path: '/signin',

@@ -81,7 +81,7 @@ const Signup = () => {
 
     return (
         <div style={{
-            backgroundImage: `url()`,
+            backgroundImage: `url('https://i.ibb.co/rQv4gHR/pexels-albin-berlin-919073.jpg')`,
             backgroundSize: 'cover',
         }} className="py-4 px-2">
             <div className="hero max-h-max py-4">

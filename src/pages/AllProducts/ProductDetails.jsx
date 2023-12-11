@@ -1,38 +1,39 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
-import BrandNames from "../BrandNames/BrandNames";
+import { getCartItems, setCartItems } from "../../utilities/LocalStorageFunctions";
 
 const ProductDetails = () => {
     const { id } = useParams();
-    // console.log(id);
     const [loadedProducts, setLoadedProducts] = useState([]);
+    const [cart, setCart] = useState(getCartItems);
+
     useEffect(() => {
-        fetch(`http://localhost:5000/product/${id}`)
+        fetch(`https://car-shop-server-pi.vercel.app/products/${id}`)
             .then(res => res.json())
             .then(data => setLoadedProducts(data))
     }, [])
-    // console.log(loadedProducts);
     const { _id, pImage, pName, pDesc, bName, pPrice } = loadedProducts;
 
+    useEffect(() => {
+        setCartItems(cart); // Update cart items in local storage when cart changes
+    }, [cart]);
 
 
-    const getStoredItems = () => {
-        const storedCartString = localStorage.getItem('cart');
-        if (storedCartString) {
-            return JSON.parse(storedCartString)
+    const addToCart = (productId) => {
+        const existingItemIndex = cart.findIndex((item) => item.id === productId);
+        if (existingItemIndex !== -1) {
+            const updatedCart = [...cart];
+            updatedCart[existingItemIndex].quantity += 1;
+            setCart(updatedCart);
+        } else {
+            const productToAdd = { id: productId, quantity: 1 };
+            setCart([...cart, productToAdd]);
         }
-        return [];
-    }
-    const saveCartItems = cart => {
-        const cartString = JSON.stringify(cart)
-        localStorage.setItem('cart', cartString);
+    };
 
-    }
-
-
-
-    const addToLocalStorages = id => {
+    const handleAddToCart = id => {
+        // console.log(id)
         Swal.fire({
             title: "Are you sure?",
             icon: "info",
@@ -42,9 +43,7 @@ const ProductDetails = () => {
             confirmButtonText: "Yes, Add to cart"
         }).then((result) => {
             if (result.isConfirmed) {
-                const cart = getStoredItems();
-                cart.push(id)
-                saveCartItems(cart);
+                addToCart(id);
                 Swal.fire({
                     title: "Succeded",
                     text: "Your product has been added.",
@@ -66,21 +65,24 @@ const ProductDetails = () => {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                // console.log('delete confirm')
-                fetch(`http://localhost:5000/product/${id}`, {
+                fetch(`https://car-shop-server-pi.vercel.app/products/${id}`, {
                     method: 'DELETE'
                 })
                     .then(res => res.json())
                     .then(data => {
-                        console.log(data)
                         if (data.deletedCount > 0) {
                             Swal.fire({
                                 title: "Deleted!",
                                 text: "Your file has been deleted.",
                                 icon: "success"
-                            });
-                            return <BrandNames></BrandNames>
-
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    window.history.go(-1);
+                                    // setTimeout(() => {
+                                    //     window.location.replace('/'); 
+                                    // }, 0);
+                                }
+                            })
 
                         }
                     })
@@ -104,8 +106,9 @@ const ProductDetails = () => {
                             <Link >
                                 <button onClick={() => handleDelete(_id)} className="btn btn-secondary">Delete Product</button>
                             </Link>
-                            <Link to={'/myCart'}>
-                                <button onClick={() => addToLocalStorages(loadedProducts)} className="btn btn-primary">Add to Cart</button>
+
+                            <Link to={''}>
+                                <button onClick={() => handleAddToCart(_id)} className="btn btn-primary">Add to Cart</button>
                             </Link>
                         </div>
                     </div>

@@ -1,28 +1,16 @@
-import { useContext, useEffect, useState } from "react";
-import { Link, useParams, } from "react-router-dom";
-import ErrorPage from "../ErrorPage/ErrorPage";
+import { Link, useLoaderData, useParams, } from "react-router-dom";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import { AuthContext } from "../../utilities/AuthProvider";
+import ProductNotFound from "./ProductNotFound";
 
 const AllProducts = () => {
-    const { setLoading} = useContext(AuthContext)
+
+    const allProducts = useLoaderData();
     const { cat } = useParams();
 
-    const [loadedProducts, setLoadedProducts] = useState([]);
-    useEffect(() => {
-        
-        fetch(`http://localhost:5000/product/`)
-            .then(res => res.json())
-            .then(data => setLoadedProducts(data))
-    }, [])
-
-
-    const filteredProduct = loadedProducts.filter(product => product.bName.toLowerCase() == cat.toLowerCase());
-    // console.log(filteredProduct.length)
+    const filteredProduct = allProducts.filter(product => product.bName.toLowerCase() == cat.toLowerCase());
     if (filteredProduct.length < 1) {
-        setLoading(true);
-        return <ErrorPage></ErrorPage>
+        return <ProductNotFound></ProductNotFound>
     }
 
     return (
@@ -32,11 +20,11 @@ const AllProducts = () => {
                     filteredProduct.slice(0, 3).map(product => <div
                         key={product._id}
                         className="max-h-screen min-h-screen">
-                        <img src={product.pImage} className="h-full w-full object-cover"/>
+                        <img src={product.pImage} className="h-full w-full object-cover" />
                         <p className="legend">{product.pName}</p>
                     </div>)
                 }
-                
+
             </Carousel>
             <div className="grid  md:grid-cols-4 gap-6 justify-items-center mx-auto py-10">
                 {
@@ -55,7 +43,7 @@ const AllProducts = () => {
                                         <button className="btn btn-accent">Update</button>
                                     </Link>
                                     <Link to={`/details/${product._id}`}>
-                                        <button className="btn btn-info">Details</button>
+                                        <button className="btn btn-info ">Details</button>
                                     </Link>
 
 

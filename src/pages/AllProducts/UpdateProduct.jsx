@@ -20,7 +20,7 @@ const UpdateProduct = () => {
 
         const updateProduct = { pName, bName, pType, pPrice, pDesc, pRating, pImage };
         // send data to server 
-        fetch(`http://localhost:5000/product/${_id}`,
+        fetch(`https://car-shop-server-pi.vercel.app/products/${_id}`,
             {
                 method: 'PUT',
                 headers: {
@@ -38,11 +38,16 @@ const UpdateProduct = () => {
                         text: 'Updated the product information successfully',
                         icon: 'success',
                         confirmButtonText: 'Ok'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            form.reset();
+                            window.history.back();
+                        }
                     })
 
                 }
             })
-        
+
     }
 
 

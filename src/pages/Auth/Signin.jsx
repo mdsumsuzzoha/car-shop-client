@@ -54,14 +54,14 @@ const Signin = () => {
     }
     return (
         <div style={{
-            backgroundImage: `url()`,
+            backgroundImage: `url('https://i.ibb.co/rQv4gHR/pexels-albin-berlin-919073.jpg')`,
             backgroundSize: 'cover',
         }} className="py-4 px-2"
         >
             <div className="min-h-max flex justify-center">
                 <div className="card shrink-0 w-full max-w-lg shadow-2xl bg-base-100">
                     <form onSubmit={handleSignInForm} className="card-body">
-                        <h3 className="text-xl font-semibold text-primary text-center">Login here</h3>
+                        <h3 className="text-xl font-semibold text-primary text-center">SIgn In here</h3>
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">Email</span>
@@ -83,7 +83,7 @@ const Signin = () => {
                             </label>
                         </div>
                         <div className="form-control mt-2">
-                            <input type="submit" value="Login" className="btn btn-primary text-lg" />
+                            <input type="submit" value="Sign in" className="btn btn-primary text-lg" />
                         </div>
                         <br />
                         <p >Do not have account? <span className="btn-link font-semibold "><Link to='/signup'>Sign Up Here</Link></span></p>
