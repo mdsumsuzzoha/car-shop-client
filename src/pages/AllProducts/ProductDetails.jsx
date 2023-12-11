@@ -36,8 +36,8 @@ const ProductDetails = () => {
         }).then((result) => {
             if (result.isConfirmed) {
 
-                console.log(newCartItem);
-                fetch(`http://localhost:5000/cartItems`, {
+                // console.log(newCartItem);
+                fetch(`https://car-shop-server-pi.vercel.app/cartItems`, {
                     method: "POST",
                     headers: {
                         "content-Type": "application/json",

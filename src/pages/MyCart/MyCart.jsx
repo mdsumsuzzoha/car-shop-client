@@ -16,7 +16,7 @@ const MyCart = () => {
 
 
     useEffect(() => {
-        fetch('http://localhost:5000/cartItems')
+        fetch('https://car-shop-server-pi.vercel.app/cartItems')
             .then((response) => response.json())
             .then((data) => setCart(data))
 
@@ -34,7 +34,7 @@ const MyCart = () => {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`http://localhost:5000/cartItems/${cartItemId}`, {
+                fetch(`https://car-shop-server-pi.vercel.app/cartItems/${cartItemId}`, {
                     method: 'DELETE'
                 })
                     .then(res => res.json())
@@ -47,7 +47,7 @@ const MyCart = () => {
                             })
                                 .then((result) => {
                                     if (result.isConfirmed) {
-                                        fetch('http://localhost:5000/cartItems')
+                                        fetch('https://car-shop-server-pi.vercel.app/cartItems')
                                             .then((response) => response.json())
                                             .then((data) => setCart(data))
 

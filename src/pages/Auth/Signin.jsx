@@ -17,7 +17,7 @@ const Signin = () => {
         const form = new FormData(e.currentTarget);
         const userLogInEmail = form.get('email')
         const userLogInPassword = form.get('password')
-        console.log(userLogInEmail, userLogInPassword)
+        // console.log(userLogInEmail, userLogInPassword)
 
         signInUser(userLogInEmail, userLogInPassword)
             .then(() => {
