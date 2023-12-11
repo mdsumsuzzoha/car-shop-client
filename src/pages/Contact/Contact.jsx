@@ -4,9 +4,9 @@ import { FaFacebook, FaLinkedinIn, FaTwitter } from "react-icons/fa";
 const Contact = () => {
     return (
         <div>
-        <div className="min-h-full w-full pt-10 mx-auto bg-base-200">
+        <div className="min-h-full w-full pt-10 mx-auto ">
             <div className="flex flex-col items-center w-10/12 mx-auto lg:flex-row-reverse">
-                <img src={'contact1Img'} className="max-w-sm rounded-lg shadow-2xl" />
+                <img src='https://i.ibb.co/Rg7z1ck/pexels-albin-berlin-919073.jpg' className="max-w-sm rounded-lg shadow-2xl" />
                 <div className='flex flex-col gap-auto items-stretch'>
                     <h3 className="text-lg font-bold pt-10 text-slate-500 ">CONTACT US</h3>
                     <div className="flex flex-col items-stretch md:flex-row w-full ">
@@ -41,8 +41,8 @@ const Contact = () => {
                 </div>
             </div>
         </div>
-        <div className=" min-h-full w-full mx-auto py-4 md:py-10 bg-base-200">
-            <div className="flex flex-col w-full justify-between gap-4 w-10/12 mx-auto md:flex-row-reverse">
+        <div className=" min-h-full w-full mx-auto py-4 md:py-10 ">
+            <div className="flex flex-col w-full justify-around gap-4 w-10/12 mx-auto md:flex-row-reverse">
                 <div className="card shrink-0 w-full max-w-lg shadow-2xl bg-slate-700">
                     <form className="card-body">
                         <h2 className='text-2xl font-bold text-white pt-2 '>Send Us Message</h2>
@@ -64,7 +64,7 @@ const Contact = () => {
                 </div>
                 <div className="card shrink-0 w-full max-w-xl shadow-2xl bg-base-100 ">
                     <form className="card-body min-h-max">
-                        <div className='h-48'>
+                        <div className='h-48 text-black'>
                              Maps loading...
                         </div>
                     </form>
